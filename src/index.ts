@@ -2,10 +2,10 @@ import "./styles.css";
 import Game from "./Game";
 import { Asset } from "./support/interfaces";
 
-import Boat from "./assets/boat.svg";
-import Raft from "./assets/raft.svg";
-import Ship from "./assets/ship.png";
-
+import Frigate from "./assets/drawing_frigate.png";
+import PirateShip from "./assets/drawing_pirateship.png";
+import Raft from "./assets/drawing_raft.png";
+import Sailboat from "./assets/drawing_sailboat.png";
 // Setup Canvas
 const game_canvas = document.createElement("canvas");
 game_canvas.width = window.innerWidth;
@@ -16,25 +16,49 @@ const game_ctx = game_canvas.getContext("2d");
 
 function initializeAssets() {
   const assets: Asset[] = [
-    { name: "boat", src: Boat, element: undefined },
-    { name: "raft", src: Raft, element: undefined },
-    { name: "ship", src: Ship, element: undefined },
+    {
+      name: "raft",
+      src: Raft,
+      size: { w: 100, h: 40 },
+      speed_max: 1,
+    },
+    {
+      name: "sailboat",
+      src: Sailboat,
+      size: { w: 180, h: 100 },
+      speed_max: 4,
+    },
+    {
+      name: "frigate",
+      src: Frigate,
+      size: { w: 100, h: 40 },
+      speed_max: 3,
+    },
+    {
+      name: "pirateship",
+      src: PirateShip,
+      size: { w: 220, h: 120 },
+      speed_max: 4,
+    },
   ];
 
   assets.forEach((asset, index) => {
     const img = new Image();
     img.src = asset.src;
     img.id = asset.name;
-    img.style.display = "none";
     assets[index].element = img;
     document.body.appendChild(img);
+    const w = asset.size.w / asset.element.naturalWidth;
+    const h = asset.size.h / asset.element.naturalHeight;
+    assets[index].scalar = w > h ? h : w;
+    img.style.display = "none";
   });
 
   return assets;
 }
 
-// Initialize Assets
-const assets = initializeAssets();
+// Initialize Ship Assets
+const ships = initializeAssets();
 
 // Initialize Game
 const game = new Game(
@@ -44,7 +68,7 @@ const game = new Game(
     w: window.innerWidth,
     h: window.innerHeight,
   },
-  assets
+  ships
 );
 
 // Handle Resize

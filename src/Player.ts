@@ -1,6 +1,6 @@
 import Game from "./Game";
 import Projectile from "./Projectile";
-import Renderable, { Asset } from "./support/interfaces";
+import Renderable, { Asset as Ship } from "./support/interfaces";
 
 import type { Vector, Size } from "./support/types";
 
@@ -23,12 +23,12 @@ export default class Player implements Renderable {
   shield: number;
   shot_timer: number;
   shot_interval: number;
-  asset: Asset;
+  ship: Ship;
   asset_scalar: { x: number; y: number };
   constructor(
     game: Game,
     name: string,
-    asset: Asset,
+    ship: Ship,
     position: Vector = { x: 50, y: 50 },
     color = "#cc6600"
   ) {
@@ -37,13 +37,9 @@ export default class Player implements Renderable {
     this.name = name;
     this.size = { w: 75, h: 45 }; // collision box dimensions
     this.color = color;
-    this.asset = asset;
-    const w = this.size.w / this.asset.element.naturalWidth;
-    const h = this.size.h / this.asset.element.naturalHeight;
-    const s = w > h ? h : w; // scale image to fit size of player
-    this.asset.scalar = s;
+    this.setShip(ship);
+
     this.speed = { x: 0, y: 0 };
-    this.speed_max = 5;
     this.last_direction = { x: 0, y: 0 };
     this.age = 0;
     this.ammo = 20;
@@ -51,10 +47,16 @@ export default class Player implements Renderable {
     this.ammo_timer = 0;
     this.ammo_interval = 250;
     this.shot_timer = 0;
-    this.shot_interval = 50;
+    this.shot_interval = 100;
     this.score = 0;
     this.health = 100;
     this.shield = 0;
+  }
+
+  setShip(ship: Ship) {
+    this.ship = ship;
+    this.size = this.ship.size;
+    this.speed_max = this.ship.speed_max;
   }
 
   update(deltaTime: number) {
@@ -138,7 +140,7 @@ export default class Player implements Renderable {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    const i = this.asset;
+    const i = this.ship;
     ctx.save();
     ctx.translate(
       this.position.x + (i.scalar * i.element.width) / 2,

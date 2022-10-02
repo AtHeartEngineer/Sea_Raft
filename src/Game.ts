@@ -34,7 +34,11 @@ export default class Game {
     size: Size,
     assets: Asset[]
   ) {
-    this.player = new Player(this, player_name, assets[2]);
+    this.player = new Player(
+      this,
+      player_name,
+      assets.find((a) => a.name === "raft")
+    );
     this.input_handler = new InputHandler(this);
     this.input = [];
     this.size = size;

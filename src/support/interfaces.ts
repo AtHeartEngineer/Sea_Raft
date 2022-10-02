@@ -10,6 +10,8 @@ export default interface Renderable {
 export interface Asset {
   name: string;
   src: string;
-  element: HTMLImageElement;
+  element?: HTMLImageElement;
+  size?: Size;
   scalar?: number;
+  speed_max?: number;
 }
