@@ -1,5 +1,5 @@
 import Game from "./Game";
-import Renderable, { Asset } from "./support/interfaces";
+import Renderable from "./support/interfaces";
 import type { Vector, Size } from "./support/types";
 
 export default class Projectile implements Renderable {

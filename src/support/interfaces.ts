@@ -7,7 +7,7 @@ export default interface Renderable {
   draw(ctx: CanvasRenderingContext2D): void;
 }
 
-export interface Asset {
+export interface Ship {
   name: string;
   src: string;
   element?: HTMLImageElement;

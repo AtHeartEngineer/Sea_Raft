@@ -1,6 +1,6 @@
 import Game from "./Game";
 import Projectile from "./Projectile";
-import Renderable, { Asset as Ship } from "./support/interfaces";
+import Renderable, { Ship } from "./support/interfaces";
 
 import type { Vector, Size } from "./support/types";
 
@@ -10,7 +10,7 @@ export default class Player implements Renderable {
   name: string;
   size: Size;
   color: string;
-  speed: Vector;
+  currect_vector: Vector;
   speed_max: number;
   last_direction: Vector;
   age: number;
@@ -39,7 +39,7 @@ export default class Player implements Renderable {
     this.color = color;
     this.setShip(ship);
 
-    this.speed = { x: 0, y: 0 };
+    this.currect_vector = { x: 0, y: 0 };
     this.last_direction = { x: 0, y: 0 };
     this.age = 0;
     this.ammo = 20;
@@ -77,60 +77,63 @@ export default class Player implements Renderable {
       this.game.input.indexOf("ArrowUp") > -1 ||
       this.game.input.indexOf("w") > -1
     ) {
-      this.speed.y = -this.speed_max;
+      this.currect_vector.y = -this.speed_max;
     } else if (
       this.game.input.indexOf("ArrowDown") > -1 ||
       this.game.input.indexOf("s") > -1
     ) {
-      this.speed.y = this.speed_max;
+      this.currect_vector.y = this.speed_max;
     } else {
-      this.speed.y = 0;
+      this.currect_vector.y = 0;
     }
 
     if (
       this.game.input.indexOf("ArrowLeft") > -1 ||
       this.game.input.indexOf("a") > -1
     ) {
-      this.speed.x = -this.speed_max;
+      this.currect_vector.x = -this.speed_max;
     } else if (
       this.game.input.indexOf("ArrowRight") > -1 ||
       this.game.input.indexOf("d") > -1
     ) {
-      this.speed.x = this.speed_max;
+      this.currect_vector.x = this.speed_max;
     } else {
-      this.speed.x = 0;
+      this.currect_vector.x = 0;
     }
 
     // Handle Last Direction
     if (
-      this.speed.x >= 1 ||
-      this.speed.y >= 1 ||
-      this.speed.x <= -1 ||
-      this.speed.y <= -1
+      this.currect_vector.x >= 1 ||
+      this.currect_vector.y >= 1 ||
+      this.currect_vector.x <= -1 ||
+      this.currect_vector.y <= -1
     ) {
-      this.last_direction = { x: this.speed.x, y: this.speed.y };
+      this.last_direction = {
+        x: this.currect_vector.x,
+        y: this.currect_vector.y,
+      };
     }
 
     // Move Player
-    this.position.y += this.speed.y;
-    this.position.x += this.speed.x;
+    this.position.y += this.currect_vector.y;
+    this.position.x += this.currect_vector.x;
 
     // Check if player is hitting boundaries
     if (this.position.y + this.size.h > this.game.size.h) {
       this.position.y = this.game.size.h - this.size.h;
-      this.speed.y = 0;
+      this.currect_vector.y = 0;
     }
     if (this.position.y < 0) {
       this.position.y = 0;
-      this.speed.y = 0;
+      this.currect_vector.y = 0;
     }
     if (this.position.x + this.size.w > this.game.size.w) {
       this.position.x = this.game.size.w - this.size.w;
-      this.speed.x = 0;
+      this.currect_vector.x = 0;
     }
     if (this.position.x < 0) {
       this.position.x = 0;
-      this.speed.x = 0;
+      this.currect_vector.x = 0;
     }
 
     // Check if player is shooting

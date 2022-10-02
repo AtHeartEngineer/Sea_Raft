@@ -1,4 +1,4 @@
-import Renderable, { Asset } from "./support/interfaces";
+import Renderable from "./support/interfaces";
 import { Size, Vector } from "./support/types";
 
 export default class Enemy implements Renderable {

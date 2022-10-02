@@ -5,7 +5,7 @@ import wave1 from "./assets/wave1";
 import Projectile from "./Projectile";
 
 import type { Size } from "./support/types";
-import Renderable, { Asset } from "./support/interfaces";
+import Renderable, { Ship } from "./support/interfaces";
 import UI from "./UI";
 import Enemy from "./Enemy";
 
@@ -26,13 +26,13 @@ export default class Game {
   ui: UI;
   game_time: number;
   game_paused: boolean;
-  assets: Asset[];
+  assets: Ship[];
   debug: boolean;
   constructor(
     context: CanvasRenderingContext2D,
     player_name = "Player 1",
     size: Size,
-    assets: Asset[]
+    assets: Ship[]
   ) {
     this.player = new Player(
       this,
