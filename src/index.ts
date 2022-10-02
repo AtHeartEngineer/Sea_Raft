@@ -1,6 +1,6 @@
 import "./styles.css";
 import Game from "./Game";
-import loadShips from "./support/load";
+import loadShipsFromImages, { loadShipsFromEmojis } from "./support/load";
 
 // Setup Canvas
 const game_canvas = document.createElement("canvas");
@@ -11,7 +11,7 @@ document.body.appendChild(game_canvas);
 const game_ctx = game_canvas.getContext("2d");
 
 // Initialize Ship Assets
-const ships = loadShips();
+const ships = loadShipsFromEmojis();
 
 // Initialize Game
 const game = new Game(

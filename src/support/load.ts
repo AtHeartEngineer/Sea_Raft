@@ -5,7 +5,7 @@ import PirateShip from "../assets/drawing_pirateship.png";
 import Raft from "../assets/drawing_raft.png";
 import Sailboat from "../assets/drawing_sailboat.png";
 
-export default function loadShips() {
+export default function loadShipsFromImages() {
   const ships: Ship[] = [
     {
       name: "raft",
@@ -43,6 +43,38 @@ export default function loadShips() {
     ships[index].scalar = w > h ? h : w;
     img.style.display = "none";
   });
+
+  return ships;
+}
+
+import emojis from "./emojis";
+export function loadShipsFromEmojis() {
+  const ships: Ship[] = [
+    {
+      name: "raft",
+      src: emojis.rowboat,
+      size: { w: 65, h: 65 },
+      speed_max: 1,
+    },
+    {
+      name: "sailboat",
+      src: emojis.sailboat,
+      size: { w: 65, h: 65 },
+      speed_max: 4,
+    },
+    {
+      name: "speedboat",
+      src: emojis.speedboat,
+      size: { w: 65, h: 65 },
+      speed_max: 3,
+    },
+    {
+      name: "ship",
+      src: emojis.ship,
+      size: { w: 65, h: 65 },
+      speed_max: 4,
+    },
+  ];
 
   return ships;
 }

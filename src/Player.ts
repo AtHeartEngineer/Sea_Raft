@@ -1,7 +1,7 @@
 import Game from "./Game";
 import Projectile from "./Projectile";
 import Renderable, { Ship } from "./support/interfaces";
-
+import emojis, { flags } from "./support/emojis";
 import type { Vector, Size } from "./support/types";
 
 export default class Player implements Renderable {
@@ -145,18 +145,28 @@ export default class Player implements Renderable {
   draw(ctx: CanvasRenderingContext2D) {
     const i = this.ship;
     ctx.save();
-    ctx.translate(
-      this.position.x + (i.scalar * i.element.width) / 2,
-      this.position.y + (i.scalar * i.element.height) / 2
-    );
-    ctx.rotate(Math.atan2(this.last_direction.y, this.last_direction.x));
-    ctx.drawImage(
-      i.element,
-      -(i.scalar * i.element.width) / 2,
-      -(i.scalar * i.element.height) / 2,
-      i.element.naturalWidth * i.scalar,
-      i.element.naturalHeight * i.scalar
-    );
+    if (i.element) {
+      ctx.translate(
+        this.position.x + (i.scalar * i.element.width) / 2,
+        this.position.y + (i.scalar * i.element.height) / 2
+      );
+      ctx.rotate(Math.atan2(this.last_direction.y, this.last_direction.x));
+      ctx.drawImage(
+        i.element,
+        -(i.scalar * i.element.width) / 2,
+        -(i.scalar * i.element.height) / 2,
+        i.element.naturalWidth * i.scalar,
+        i.element.naturalHeight * i.scalar
+      );
+    } else {
+      ctx.font = `${this.size.h}px Arial`;
+      ctx.translate(
+        this.position.x + i.size.w / 2,
+        this.position.y + i.size.h / 2
+      );
+      ctx.rotate(Math.atan2(this.last_direction.y, this.last_direction.x));
+      ctx.fillText(emojis.sailboat, (-1 * this.size.w) / 2, this.size.h / 3);
+    }
     if (this.game.debug) {
       ctx.strokeStyle = "red";
       ctx.setLineDash([5, 5]);
