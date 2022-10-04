@@ -73,10 +73,16 @@ export default class Game {
     this.debug_msgs = ["Debug Messages"];
 
     //this.bg = new Layer(this, "rgba(0, 100, 220, .78)", 0);
-    this.waves = new Layer(this, "#0066dd", 37, new Path2D(wave1), {
-      x: 0.25,
-      y: 0.25,
-    });
+    this.waves = new Layer(
+      this,
+      "#0066dd",
+      (this.size.w * this.size.h) / 25000 /* Wave density */,
+      new Path2D(wave1),
+      {
+        x: 0.25,
+        y: 0.25,
+      }
+    );
 
     // Update Queue
     this.update_queue.push(this.environment);
@@ -178,6 +184,7 @@ export default class Game {
     this.size.w = innerWidth;
     this.size.h = innerHeight;
     this.player.setPosition();
+    this.waves.generatePositions();
   }
 
   endGame() {

@@ -15,8 +15,8 @@ export default class Environment implements Renderable {
     game: Game,
     current: Vector,
     current_strength = 1,
-    current_volatility = 0.001,
-    current_interval = 1500,
+    current_volatility = 0.1,
+    current_interval = 500,
     current_counter = 0
   ) {
     this.game = game;
@@ -32,10 +32,10 @@ export default class Environment implements Renderable {
     this.current_counter += timeDelta;
     if (this.current_counter > this.current_interval) {
       this.current_counter = 0;
-      const shift = normalizeVector({
+      const shift = {
         x: (Math.random() - 0.5) * this.current_volatility,
         y: (Math.random() - 0.5) * this.current_volatility,
-      });
+      };
       this.current.x += shift.x;
       this.current.y += shift.y;
       this.current = normalizeVector(this.current);

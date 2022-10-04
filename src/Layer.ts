@@ -28,7 +28,7 @@ export default class Layer implements Renderable {
     this.color = color;
     this.count = count;
     this.scale = scale;
-    this.max_closeness = max_closeness; // 5% of the screen width/height
+    this.max_closeness = max_closeness; // x% of the screen width/height
     this.positions = [];
     this.update_interval = 250;
     this.update_timer = 0;
@@ -37,7 +37,9 @@ export default class Layer implements Renderable {
 
   addPosition(position?: Vector): void {
     let satisfied = false;
+    let counter = 0;
     while (!satisfied) {
+      counter += 1;
       if (position) {
         satisfied = true;
         break;
@@ -63,8 +65,14 @@ export default class Layer implements Renderable {
         position = new_position;
         satisfied = true;
       }
+      if (counter > 1000) {
+        satisfied = true;
+        break;
+      }
     }
-    this.positions.push(position);
+    if (position) {
+      this.positions.push(position);
+    }
   }
 
   generatePositions(): void {
@@ -75,7 +83,7 @@ export default class Layer implements Renderable {
     } else if (this.count > 1) {
       let count = this.count;
       this.positions = [];
-      while (count) {
+      while (count > 0) {
         this.addPosition();
         count--;
       }
