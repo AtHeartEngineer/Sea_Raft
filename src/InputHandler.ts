@@ -28,5 +28,8 @@ export default class InputHandler {
         this.game.input.splice(this.game.input.indexOf(event.key), 1);
       }
     });
+    this.game.canvas.addEventListener("mousemove", (event: MouseEvent) => {
+      this.game.mouse = { x: event.clientX, y: event.clientY };
+    });
   }
 }

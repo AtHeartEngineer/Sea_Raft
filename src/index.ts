@@ -15,21 +15,21 @@ const ships = loadShipsFromEmojis();
 
 // Initialize Game
 const game = new Game(
+  game_canvas,
   game_ctx,
   "Player 1",
   {
     w: window.innerWidth,
     h: window.innerHeight,
   },
-  ships
+  ships,
+  true,
+  true
 );
 
 // Handle Resize
 window.addEventListener("resize", () => {
-  game_canvas.width = window.innerWidth;
-  game_canvas.height = window.innerHeight;
-  game.size.w = window.innerWidth;
-  game.size.h = window.innerHeight;
+  game.resize(window.innerWidth, window.innerHeight);
 });
 
 // Start Game when page is loaded
