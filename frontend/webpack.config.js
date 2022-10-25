@@ -20,6 +20,10 @@ module.exports = {
       },
     ],
   },
+  experiments: {
+    asyncWebAssembly: true,
+    syncWebAssembly: true,
+  },
   plugins: [
     new HtmlWebpackPlugin({
       title: "Sea Raft",
@@ -33,4 +37,5 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     clean: true,
   },
+  watch: true,
 };
